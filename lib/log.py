@@ -24,7 +24,7 @@ def setup_logger(name: str = __name__, log_dir: str = "logs") -> logging.Logger:
 
     # ロガーを取得
     logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
 
     # 既存のハンドラーをクリア（重複を防ぐ）
     if logger.handlers:
@@ -32,11 +32,11 @@ def setup_logger(name: str = __name__, log_dir: str = "logs") -> logging.Logger:
 
     # ファイルハンドラーを設定
     file_handler = logging.FileHandler(log_file, encoding="utf-8")
-    file_handler.setLevel(logging.INFO)
+    file_handler.setLevel(logging.DEBUG)
 
     # コンソールハンドラーを設定
     console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
+    console_handler.setLevel(logging.DEBUG)
 
     # フォーマッターを設定（日付・時刻、レベル、メッセージ）
     formatter = logging.Formatter(
@@ -59,7 +59,7 @@ logger = setup_logger()
 
 if __name__ == "__main__":
     # 使用例
+    logger.debug("デバッグメッセージ")  # デフォルトでは表示されません
     logger.info("情報メッセージ")
     logger.warning("警告メッセージ")
     logger.error("エラーメッセージ")
-    logger.debug("デバッグメッセージ")  # デフォルトでは表示されません
