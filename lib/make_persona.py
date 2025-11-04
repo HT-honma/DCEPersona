@@ -29,6 +29,7 @@ def make_persona(client: OpenAI, n: int = 5):
         "interests": ["研究", "教育", "マネジメント", "ワークライフバランス", "給与 など"],
         "challenges": ["人的リソース不足", "多重課題 など"],
         "goals": ["専門認定取得", "業務改善 など"],
+        "family": ["独身", "結婚あり", "子供あり"]
     }}
 
     制約：
@@ -56,16 +57,10 @@ def make_persona(client: OpenAI, n: int = 5):
 
     # もし response_format が "json_object" の都合で { "data": [...] } のように返ってきた場合も考慮
     try:
-        parsed = json.loads(content)
-        if isinstance(parsed, dict) and "data" in parsed:
-            personas = parsed["data"]
-        elif isinstance(parsed, list):
-            personas = parsed
-        else:
-            # 想定外のJSON形状はそのまま保持
-            personas = parsed
+        personas = json.loads(content)
+        nurses = personas['personas']
     except json.JSONDecodeError:
         # 万一JSONで返らなかった場合のフォールバック（整形を試みる or そのまま保存）
-        personas = content
+        nurses = content
 
-    return personas
+    return nurses
